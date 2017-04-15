@@ -329,23 +329,23 @@
     ;; ("l" . forward-word)
     ;; ("j" . next-window-line)
     ;; ("k" . previous-window-line)
-    ("j" . backward-char)               ;1文字移動(←)
-    ("i" . previous-line)               ;1行移動(↑)
-    ("k" . next-line)                   ;1行移動(↓)
+    ("h" . backward-char)               ;1文字移動(←)
+    ("j" . next-line)                   ;1行移動(↓)
+    ("k" . previous-line)               ;1行移動(↑)
     ("l" . forward-char)                ;1文字移動(→)
-    ("h" . beginning-of-line)           ;行の先頭
-    (";" . end-of-line)                 ;行の最後
+    ("0" . beginning-of-line)           ;行の先頭
+    ("\$" . end-of-line)                ;行の最後
     ("y" . beginning-of-buffer)         ;バッファの先頭
     ("o" . end-of-buffer)               ;バッファの最後
     ;; (";" . gene-word)
-    ("b" . scroll-down)                 ;1pageスクロール
-    (" " . scroll-up)                   ;1pageスクロール
+    ("e" . scroll-down)                 ;1pageスクロール(↑)
+    (" " . scroll-up)                   ;1pageスクロール(↓)
     (":" . View-scroll-half-page-forward) ;half-page移動(↓)(↑はu)
     ;; w3m-like
     ;; ("m" . gene-word)
     ;; ("i" . win-delete-current-window-and-squeeze)
     ("w" . forward-word)                ;単語移動
-    ("e" . backward-word)               ;単語移動
+    ("b" . backward-word)               ;単語移動
     ;; ("(" . point-undo)
     ;; (")" . point-redo)
     ;; ("J" . ,(lambda () (interactive) (scroll-up 1)))
