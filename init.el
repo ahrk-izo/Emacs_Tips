@@ -324,42 +324,44 @@
 ;; view-mode用キーバインドを設定
 (setq view-read-only t)
 (defvar pager-keybind
-  `( ;; vi-like
-    ;; ("h" . backward-word)
-    ;; ("l" . forward-word)
-    ;; ("j" . next-window-line)
-    ;; ("k" . previous-window-line)
+  `(
     ("h" . backward-char)               ;1文字移動(←)
     ("j" . next-line)                   ;1行移動(↓)
     ("k" . previous-line)               ;1行移動(↑)
     ("l" . forward-char)                ;1文字移動(→)
     ("0" . beginning-of-line)           ;行の先頭
     ("\$" . end-of-line)                ;行の最後
-    ("y" . beginning-of-buffer)         ;バッファの先頭
-    ("o" . end-of-buffer)               ;バッファの最後
-    ;; (";" . gene-word)
-    ("e" . scroll-down)                 ;1pageスクロール(↑)
-    (" " . scroll-up)                   ;1pageスクロール(↓)
-    (":" . View-scroll-half-page-forward) ;half-page移動(↓)(↑はu)
-    ;; w3m-like
-    ;; ("m" . gene-word)
-    ;; ("i" . win-delete-current-window-and-squeeze)
-    ("w" . forward-word)                ;単語移動
-    ("b" . backward-word)               ;単語移動
-    ;; ("(" . point-undo)
-    ;; (")" . point-redo)
-    ;; ("J" . ,(lambda () (interactive) (scroll-up 1)))
-    ;; ("K" . ,(lambda () (interactive) (scroll-down 1)))
-    ("n" . ,(lambda () (interactive) (scroll-up 1)))     ;スクロールUP(カーソルは画面が切れるまで移動しない)↑
-    ("p" . ,(lambda () (interactive) (scroll-down 1)))   ;スクロールUP(カーソルは画面が切れるまで移動しない)↓
+    ("f" . scroll-up)                   ;1pageスクロール(↓)
+    ("b" . scroll-down)                 ;1pageスクロール(↑)
+    ;; half-page移動(d:↓)(u:↑)
+    ;; 1行スクロール(y:↑)
+    ("e" . ,(lambda () (interactive) (scroll-up 1))) ;1行スクロール(↓)
+    ("w" . forward-word)                ;単語移動(→)
+    ("a" . backward-word)               ;単語移動(←)
     ;; bm-easy
     ("m" . bm-toggle)                   ;行にマークを付ける
     ("[" . bm-previous)                 ;マーク行に移動
     ("]" . bm-next)                     ;マーク行に移動
+    ;; 以下消す予定↓
+    ;; ("y" . beginning-of-buffer)         ;バッファの先頭
+    ;; ("o" . end-of-buffer)               ;バッファの最後
+    ;; (";" . gene-word)
+    ;; w3m-like
+    ;; ("m" . gene-word)
+    ;; ("i" . win-delete-current-window-and-squeeze)
+    ;; ("(" . point-undo)
+    ;; (")" . point-redo)
+    ;; ("J" . ,(lambda () (interactive) (scroll-up 1)))
+    ;; ("K" . ,(lambda () (interactive) (scroll-down 1)))
     ;; langhelp-like
     ;; ("c" . scroll-other-window-down)
     ;; ("v" . scroll-other-window)
-    ))
+    ;; ("p" . ,(lambda () (interactive) (scroll-down 1)))   ;スクロールUP(カーソルは画面が切れるまで移動しない)↓
+    ;; ("h" . backward-word)
+    ;; ("l" . forward-word)
+    ;; ("j" . next-window-line)
+    ;; ("k" . previous-window-line)
+))
 (defun define-many-keys (keymap key-table &optional includes)
   (let (key cmd)
     (dolist (key-cmd key-table)
