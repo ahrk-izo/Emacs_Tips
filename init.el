@@ -186,6 +186,9 @@
 (define-key global-map (kbd "S-<up>") 'shrink-window)                  ;分割したウィンドウサイズ変更(shift + ↑)
 (define-key global-map (kbd "S-<down>") 'enlarge-window)               ;分割したウィンドウサイズ変更(shift + ↓)
 
+;; 分割したframeでの操作
+(define-key global-map (kbd "C-M-+") 'other-frame) ;分割したフレーム間の移動(正方向)
+
 ;; perlやrubyの正規表現を使えるようにする
 (require 'foreign-regexp)
 (custom-set-variables
@@ -342,25 +345,6 @@
     ("m" . bm-toggle)                   ;行にマークを付ける
     ("[" . bm-previous)                 ;マーク行に移動
     ("]" . bm-next)                     ;マーク行に移動
-    ;; 以下消す予定↓
-    ;; ("y" . beginning-of-buffer)         ;バッファの先頭
-    ;; ("o" . end-of-buffer)               ;バッファの最後
-    ;; (";" . gene-word)
-    ;; w3m-like
-    ;; ("m" . gene-word)
-    ;; ("i" . win-delete-current-window-and-squeeze)
-    ;; ("(" . point-undo)
-    ;; (")" . point-redo)
-    ;; ("J" . ,(lambda () (interactive) (scroll-up 1)))
-    ;; ("K" . ,(lambda () (interactive) (scroll-down 1)))
-    ;; langhelp-like
-    ;; ("c" . scroll-other-window-down)
-    ;; ("v" . scroll-other-window)
-    ;; ("p" . ,(lambda () (interactive) (scroll-down 1)))   ;スクロールUP(カーソルは画面が切れるまで移動しない)↓
-    ;; ("h" . backward-word)
-    ;; ("l" . forward-word)
-    ;; ("j" . next-window-line)
-    ;; ("k" . previous-window-line)
 ))
 (defun define-many-keys (keymap key-table &optional includes)
   (let (key cmd)
@@ -522,6 +506,26 @@
         (define-key map [remap newline-and-indent] 'ruby-electric-space/return)
         map))
 
+
+;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(setq web-mode-engines-alist
+      '(("php"   . "\\.phtml\\'")
+        ("blade" . "\\.blade\\.")))
+(defun web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)) ;インデント文字数
+(add-hook 'web-mode-hook 'web-mode-hook)
+
+
 ;; 括弧等の自動挿入
 (require 'ruby-electric nil t)
 ;; endに対応する行のハイライト
@@ -646,4 +650,3 @@
 
 ;; isearch実行中に、C-kを押すと、ミニバッファの文字列に日本語もできるようになる
 (define-key isearch-mode-map (kbd "C-k") 'isearch-edit-string)
-
