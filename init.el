@@ -611,6 +611,31 @@
 (set-face-foreground 'font-lock-builtin-face "magenta")
 (set-face-bold-p 'font-lock-builtin-face t)
 
+
+;; 色の設定(web-mode)
+(custom-set-faces
+ '(web-mode-doctype-face
+   ((t (:foreground "#82AE46"))))
+ '(web-mode-html-tag-face
+   ((t (:foreground "#E6B422" :weight bold))))
+ '(web-mode-html-attr-name-face
+   ((t (:foreground "#C97586"))))
+ '(web-mode-html-attr-value-face
+   ((t (:foreground "#82AE46"))))
+ '(web-mode-comment-face
+   ((t (:foreground "#D9333F"))))
+ '(web-mode-server-comment-face
+   ((t (:foreground "#D9333F"))))
+ '(web-mode-css-rule-face
+   ((t (:foreground "#A0D8EF"))))
+ '(web-mode-css-pseudo-class-face
+   ((t (:foreground "#FF7F00"))))
+ '(web-mode-css-at-rule-face
+   ((t (:foreground "#FF7F00"))))
+)
+
+
+
 ;; タブ、全角空白、改行前にあるスペースやタブを強調する
 ;; (defface my-face-b-1 '((t (:background "#375757"))) nil) ;全角空白
 ;; (defface my-face-b-2 '((t (:background "#375757"))) nil) ;タブ
