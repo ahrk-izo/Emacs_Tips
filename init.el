@@ -186,6 +186,9 @@
 (define-key global-map (kbd "S-<up>") 'shrink-window)                  ;分割したウィンドウサイズ変更(shift + ↑)
 (define-key global-map (kbd "S-<down>") 'enlarge-window)               ;分割したウィンドウサイズ変更(shift + ↓)
 
+;; 分割したframeでの操作
+(define-key global-map (kbd "C-M-+") 'other-frame) ;分割したフレーム間の移動(正方向)
+
 ;; perlやrubyの正規表現を使えるようにする
 (require 'foreign-regexp)
 (custom-set-variables
@@ -324,42 +327,25 @@
 ;; view-mode用キーバインドを設定
 (setq view-read-only t)
 (defvar pager-keybind
-  `( ;; vi-like
-    ;; ("h" . backward-word)
-    ;; ("l" . forward-word)
-    ;; ("j" . next-window-line)
-    ;; ("k" . previous-window-line)
-    ("j" . backward-char)               ;1文字移動(←)
-    ("i" . previous-line)               ;1行移動(↑)
-    ("k" . next-line)                   ;1行移動(↓)
+  `(
+    ("h" . backward-char)               ;1文字移動(←)
+    ("j" . next-line)                   ;1行移動(↓)
+    ("k" . previous-line)               ;1行移動(↑)
     ("l" . forward-char)                ;1文字移動(→)
-    ("h" . beginning-of-line)           ;行の先頭
-    (";" . end-of-line)                 ;行の最後
-    ("y" . beginning-of-buffer)         ;バッファの先頭
-    ("o" . end-of-buffer)               ;バッファの最後
-    ;; (";" . gene-word)
-    ("b" . scroll-down)                 ;1pageスクロール
-    (" " . scroll-up)                   ;1pageスクロール
-    (":" . View-scroll-half-page-forward) ;half-page移動(↓)(↑はu)
-    ;; w3m-like
-    ;; ("m" . gene-word)
-    ;; ("i" . win-delete-current-window-and-squeeze)
-    ("w" . forward-word)                ;単語移動
-    ("e" . backward-word)               ;単語移動
-    ;; ("(" . point-undo)
-    ;; (")" . point-redo)
-    ;; ("J" . ,(lambda () (interactive) (scroll-up 1)))
-    ;; ("K" . ,(lambda () (interactive) (scroll-down 1)))
-    ("n" . ,(lambda () (interactive) (scroll-up 1)))     ;スクロールUP(カーソルは画面が切れるまで移動しない)↑
-    ("p" . ,(lambda () (interactive) (scroll-down 1)))   ;スクロールUP(カーソルは画面が切れるまで移動しない)↓
+    ("0" . beginning-of-line)           ;行の先頭
+    ("\$" . end-of-line)                ;行の最後
+    ("f" . scroll-up)                   ;1pageスクロール(↓)
+    ("b" . scroll-down)                 ;1pageスクロール(↑)
+    ;; half-page移動(d:↓)(u:↑)
+    ;; 1行スクロール(y:↑)
+    ("e" . ,(lambda () (interactive) (scroll-up 1))) ;1行スクロール(↓)
+    ("w" . forward-word)                ;単語移動(→)
+    ("a" . backward-word)               ;単語移動(←)
     ;; bm-easy
     ("m" . bm-toggle)                   ;行にマークを付ける
     ("[" . bm-previous)                 ;マーク行に移動
     ("]" . bm-next)                     ;マーク行に移動
-    ;; langhelp-like
-    ;; ("c" . scroll-other-window-down)
-    ;; ("v" . scroll-other-window)
-    ))
+))
 (defun define-many-keys (keymap key-table &optional includes)
   (let (key cmd)
     (dolist (key-cmd key-table)
@@ -388,7 +374,7 @@
 (size-indication-mode t)                ;ファイルサイズを表示
 (setq frame-title-format "%f %Z")       ;タイトルバーにファイルのフルパスを表示(%Zで文字コードと改行コードも)
 (global-linum-mode t)                   ;行番号を常に表示(すべてのバッファに)
-(setq-default tab-width 4)              ;TABの表示幅(初期値は8)
+(setq-default tab-width 2)              ;TABの表示幅(初期値は8)
 (setq-default indent-tabs-mode nil)     ;インデントにタブ文字を使用しない
 
 (global-hl-line-mode t)                 ;現在行のハイライト
@@ -520,6 +506,26 @@
         (define-key map [remap newline-and-indent] 'ruby-electric-space/return)
         map))
 
+
+;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(setq web-mode-engines-alist
+      '(("php"   . "\\.phtml\\'")
+        ("blade" . "\\.blade\\.")))
+(defun web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)) ;インデント文字数
+(add-hook 'web-mode-hook 'web-mode-hook)
+
+
 ;; 括弧等の自動挿入
 (require 'ruby-electric nil t)
 ;; endに対応する行のハイライト
@@ -605,6 +611,31 @@
 (set-face-foreground 'font-lock-builtin-face "magenta")
 (set-face-bold-p 'font-lock-builtin-face t)
 
+
+;; 色の設定(web-mode)
+(custom-set-faces
+ '(web-mode-doctype-face
+   ((t (:foreground "#82AE46"))))
+ '(web-mode-html-tag-face
+   ((t (:foreground "#E6B422" :weight bold))))
+ '(web-mode-html-attr-name-face
+   ((t (:foreground "#C97586"))))
+ '(web-mode-html-attr-value-face
+   ((t (:foreground "#82AE46"))))
+ '(web-mode-comment-face
+   ((t (:foreground "#D9333F"))))
+ '(web-mode-server-comment-face
+   ((t (:foreground "#D9333F"))))
+ '(web-mode-css-rule-face
+   ((t (:foreground "#A0D8EF"))))
+ '(web-mode-css-pseudo-class-face
+   ((t (:foreground "#FF7F00"))))
+ '(web-mode-css-at-rule-face
+   ((t (:foreground "#FF7F00"))))
+)
+
+
+
 ;; タブ、全角空白、改行前にあるスペースやタブを強調する
 ;; (defface my-face-b-1 '((t (:background "#375757"))) nil) ;全角空白
 ;; (defface my-face-b-2 '((t (:background "#375757"))) nil) ;タブ
@@ -644,4 +675,3 @@
 
 ;; isearch実行中に、C-kを押すと、ミニバッファの文字列に日本語もできるようになる
 (define-key isearch-mode-map (kbd "C-k") 'isearch-edit-string)
-
