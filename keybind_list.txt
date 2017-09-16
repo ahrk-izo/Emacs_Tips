@@ -1,0 +1,183 @@
+キーバインドリスト
+
+[選択]
+C-x h : 全選択
+
+[移動]
+C-M-; : 半画面スクロール(↑)
+C-M-: : 半画面スクロール(↓)
+C-M-[ : 1行スクロール(↑)
+C-M-] : 1行スクロール(↓)
+S-M-[ : 空行刻みスクロール(↑)
+S-M-] : 空行刻みスクロール(↓)
+M-a   : 現在の文の先頭
+M-e   : 現在の文の最後
+C-M-b : S式(括弧とか)移動(←)
+C-M-f : S式(括弧とか)移動(→)
+C-M-n : 括弧移動(←)
+C-M-p : 括弧移動(→)
+C-M-a : 関数移動(←)
+C-M-e : 関数移動(→)
+C-M-h : 関数単位で選択
+C-c j : 行ジャンプ
+F7    : point-undo
+S-F7  : point-redo
+M-SPC : 行マーク
+ M-[  : マークした行に戻る
+ M-]  : マークした行に進む
+
+---------
+[text]
+(undo)
+C-/ : undo
+C-\ : redo
+C-x u : undo-tree
+(文字列処理)
+M-u     : 大文字変換
+M-u     : 小文字変換
+M-c     : 単語先頭を大文字変換
+C-.     : 空白1つに
+C-c C-. : 空白削除
+C-c C-u : align-regexp 文字列指定して縦に揃える
+M-(     : 括弧を付ける(括りたい文字列を選択して)
+M-)     : 括弧を外す(括弧の中で)
+C-c M-s : 括弧を分割(括弧の中で)
+C-x C-t : 上の行と下の行の入れ替え
+(検索)
+C-s   : 検索(前方向)
+C-r   : 検索(後方向)
+C-M-s : 検索(前方向)正規表現あり
+C-M-r : 検索(後方向)正規表現あり
+ ※正規表現がPerlモードになっている！
+C-c o [M-s o] : Occurバッファに検索結果表示
+ e            : Occurバッファ内で編集(C-c C-cで終了)
+C-x w h       : highlight-regexp(ハイライト)
+C-x w r       : ハイライト解除
+(置換)
+C-c 3   : query-replace 置換(対話式)M-%が押しにくいので
+C-c C-3 : replace-string 置換(一括)
+C-c 4   : query-replace-regexp 置換(対話式)正規表現ありC-M-%が押しにくいので
+C-c C-4 : replace-regexp 置換(一括)正規表現あり
+ ※正規表現がPerlモードになっている！
+ 対話的
+ y : 置換して次へ
+ n : 置換せず次へ
+ q : 終了
+ ! : 残りを全て置換
+(正規表現)
+M-s M-s : iSearch インクリメンタルサーチ
+M-s M-r : iSearch backward 逆方向へインクリメンタルサーチ
+M-s M-% : Query Replace 置換(問い合わせあり。! で一括変換) 参照文字は$1,$2,...
+M-s M-l : re-builder そのバッファ内で正規表現をテストできる
+M-s M-o : Occur バッファ内でマッチする位置の行を別バッファで確認
+M-s M-\ : 選択範囲のメタ文字(!*{}[]@など)にバックスラッシュを一括でつける
+ 正規表現を確認→置換にはこっちが便利(検索だけならC-M-sでOK)
+ 例：M-s M-lで正規表現確認→そのバッファ内でそのままM-s M-%(検索文字が残る)M-s M-oでもOK
+(ソート)
+C-c C-a     : 昇順
+C-u C-c C-a : 降順(C-uを付けて逆になる)
+(矩形選択)
+C-RET : 矩形でリージョン
+ M-n : ナンバリング
+ M-o : 空白挿入(普通にspeaceでいいけど)
+(grep)
+C-M-g   : grep
+C-c g f : grep-find
+ C-c C-p : wgrep(grepバッファ内で編集) C-x C-sで編集完了 C-c C-kで編集破棄
+           M-x wgrep-same-all-buffersで一括保存
+(org-mode)
+a|b|<TAB>     : 表になる
+|-<TAB>       : |---+---|
+M-↑ ↓ ← →     : 表の入れ替え
+C-c |         : インポート(,区切りが表になる)
+
+---------
+[directory]
+C-x d    : dired起動
+C-x C-j  : カレントでdired起動
+RET or f : file open
+ d : マーク(削除候補)
+ x : マークしたファイルを削除
+ m : マーク
+ u : カレント行のマークを外す
+ *! : 全てのマークを外す
+ + : ディレクトリ追加
+ C : ファイルをコピー(マークなければカレントのファイル)
+ R : ファイル名を変更(マークなければカレントのファイル)
+ D : ファイルを削除(マークなければカレントのファイル)
+ r : wdired(diredバッファ内でファイル名編集) C-x C-sで編集完了 C-c C-kで編集破棄
+ s : 色々なソート
+
+[同時押し]
+kj : view-mode
+nm : junk file
+fr : 最近使ったファイル
+ ※これらは使えなくなるときがある。その際はemacsを再起動すればOK
+
+[関数]
+C-c f d : 関数を閉じる・展開のマイナーモード有効無効(hs-minor-mode)
+F12 : 閉じる・展開トグル({}の中で)
+S-F12 : 全て閉じる
+S-M-F12 : 全て展開
+
+
+
+
+
+
+---------
+[web-mode]
+[Ceneral]
+C-c C-; : comment / uncomment line(s) →☓
+C-c C-f : toggle folding on a tag/block(タグ折りたたむ) *
+C-c C-i : indent entire buffer(インデント揃え。tabでいいような)
+C-c C-m : mark and expand(選択と拡大。選択部分を拡大していく)
+C-c C-s : insert snippet(スニペット挿入。html5 / table/ ul) *
+C-c C-w : toggle display of invalid whitespaces(空白表示)
+C-c C-n : 対応タグジャンプ
+[DOM]
+C-c C-d d : show tag mismatch(タグミスを表示) *
+C-c C-d n : normalize(? C-c C-i と同じ？)
+C-c C-d q : replace dumb quotes(?)
+C-c C-d t : traverse dom tree(要素を横断していく)
+C-c C-d x : xpath(階層を表示)
+[Block] (まずブロックがなんなのかわからんな。。。)
+C-c C-b c : block close(?)
+C-c C-b b : block beginning(?)
+C-c C-b e : block end(?)
+C-c C-b p : previous block
+C-c C-b n : next block
+C-c C-b k : block kill
+C-c C-b s : block select
+[HTML element]
+C-c / : element close →☓(undifined)
+C-c C-e b : element beginning(その要素の先頭タグへ移動) *
+C-c C-e c : element clone(カレント要素の複製)
+C-c C-e d : child element(down)(子要素へ移動)
+C-c C-e i : select element content(inner)(タグ挿入？)
+C-c C-e k : element kill(タグとその中身削除)
+[HTML tag]
+C-c C-t a : sort attributes(?)
+C-c C-t b : tag beginning(タグの先頭に移動。でもそのタグの中にいなきゃだめ？)
+C-c C-t e : tab end(タグの最後に移動) タグが長かったら使いそう
+C-c C-t m : fetch matching tag(also available for active blocks)(そのタブと対になっているタグに移動)
+            C-c C-nでOK (C-M-f, C-M-bでもまぁよさそう)
+C-c C-t s : select tag(そのタグだけ選択)
+C-c C-t p : previous tag(タグの先頭に移動)
+C-c C-t n : next tag(次のタグへ移動)
+[HTML attribute]
+C-c C-a b : attribute beginning(?)
+C-c C-a e : attribute end
+C-c C-a s : attribute select
+C-c C-a t : attribute transpose
+C-c C-a n : attribute next
+[その他]
+C-c C-l : リンク挿入(ファイル指定して)
+          .html, .js, .png(画像)で記述や挿入場所が異なる
+
+---------
+[debug]
+emacs --debug-init : デバッグ起動
+M-x goto-char RET 数字 : エラー番号にジャンプ
+
+

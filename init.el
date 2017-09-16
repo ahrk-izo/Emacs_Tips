@@ -374,7 +374,7 @@
 (size-indication-mode t)                ;ファイルサイズを表示
 (setq frame-title-format "%f %Z")       ;タイトルバーにファイルのフルパスを表示(%Zで文字コードと改行コードも)
 (global-linum-mode t)                   ;行番号を常に表示(すべてのバッファに)
-(setq-default tab-width 4)              ;TABの表示幅(初期値は8)
+(setq-default tab-width 2)              ;TABの表示幅(初期値は8)
 (setq-default indent-tabs-mode nil)     ;インデントにタブ文字を使用しない
 
 (global-hl-line-mode t)                 ;現在行のハイライト
